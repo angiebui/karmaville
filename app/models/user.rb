@@ -30,4 +30,7 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def self.page(pagination)
+    self.by_karma.limit(pagination.pagination_limit).offset(pagination.offset)
+  end
 end

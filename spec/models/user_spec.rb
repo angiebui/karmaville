@@ -48,4 +48,35 @@ describe User do
       user.full_name.should eq 'John Doe'
     end
   end
+
+  describe '#page' do
+    before do
+      @users = []
+      3.times do 
+        @users << create(:user) 
+      end
+    end
+
+    it 'returns the list of users offset for the page' do
+      pagination = double(Pagination, :pagination_limit => 1, :offset => 0)
+      User.page(pagination).first.should eql(@users[0])
+    end
+
+    it 'returns the list of users offset for the page' do
+      pagination = double(Pagination, :pagination_limit => 1, :offset => 1)
+      User.page(pagination).first.should eql(@users[1])
+    end
+
+    it 'returns the list of users offset for the page' do
+      pagination = double(Pagination, :pagination_limit => 1, :offset => 2)
+      User.page(pagination).first.should eql(@users[2])
+    end
+
+    it 'returns the list of users offset for the page' do
+      pagination = double(Pagination, :pagination_limit => 10, :offset => 0)
+      User.page(pagination).should =~ @users
+    end
+  end
+
+  
 end

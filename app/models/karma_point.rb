@@ -10,7 +10,6 @@ class KarmaPoint < ActiveRecord::Base
 
   private
   def update_user_karma!
-    self.user.total_karma = self.user.total_karma + self.value
-    self.user.save!
+    self.user.update_attribute(:total_karma, self.user.total_karma + self.value)
   end
 end
